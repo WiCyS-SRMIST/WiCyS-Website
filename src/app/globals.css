@@ -1,26 +1,354 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* deep plum canvas, hue pulled toward the WiCyS magenta-purple */
+  --bg: #140a1b;
+  --bg-2: #1c0f27;
+  --surface: #251434;
+  --surface-2: #301a42;
+  --border: #3b2350;
+  --border-soft: #2c1a3c;
+
+  --text: #f5eef8;
+  --text-muted: #c6b1cf;
+  --text-faint: #92799d;
+
+  /* WiCyS brand — sampled from the logo */
+  --violet: #b756d2; /* brightened for dark surfaces */
+  --violet-deep: #822d91; /* logo purple */
+  --violet-ink: #4c1a58;
+  --green: #a6c93f; /* logo green, nudged darker */
+  --green-deep: #6f9327;
+  --on-green: #17240a;
+  --teal: #63a6c6; /* logo shield */
+  --gold: #e2c36e; /* logo inner ring */
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-2: var(--bg-2);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-faint: var(--text-faint);
+  --color-violet: var(--violet);
+  --color-violet-deep: var(--violet-deep);
+  --color-violet-ink: var(--violet-ink);
+  --color-green: var(--green);
+  --color-green-deep: var(--green-deep);
+  --color-on-green: var(--on-green);
+  --color-teal: var(--teal);
+  --color-gold: var(--gold);
+
+  --font-display: var(--font-bricolage);
+  --font-sans: var(--font-plex-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  position: relative;
+  min-height: 100dvh;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* drifting aurora */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -25%;
+  z-index: -2;
+  pointer-events: none;
+  background-image:
+    radial-gradient(
+      36rem 36rem at 80% 2%,
+      color-mix(in oklab, var(--violet) 34%, transparent),
+      transparent 66%
+    ),
+    radial-gradient(
+      28rem 28rem at 4% 16%,
+      color-mix(in oklab, var(--green) 14%, transparent),
+      transparent 66%
+    ),
+    radial-gradient(
+      30rem 30rem at 92% 92%,
+      color-mix(in oklab, var(--teal) 20%, transparent),
+      transparent 68%
+    );
+  animation: aurora 28s ease-in-out infinite alternate;
+}
+
+/* fine grain for depth */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--green);
+  color: var(--on-green);
+}
+
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* frosted glass surface */
+.glass {
+  background: color-mix(in oklab, var(--bg-2) 84%, transparent);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid color-mix(in oklab, var(--text) 14%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--text) 16%, transparent),
+    0 18px 50px -18px rgba(0, 0, 0, 0.8);
+}
+
+/* gradient hairline border for feature cards */
+.ring-brand {
+  position: relative;
+}
+.ring-brand::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    140deg,
+    color-mix(in oklab, var(--violet) 55%, transparent),
+    transparent 40%,
+    color-mix(in oklab, var(--green) 45%, transparent)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* animated sheen on primary buttons */
+.sheen {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.sheen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-120%);
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.45) 50%,
+    transparent 80%
+  );
+}
+.sheen:hover::before {
+  animation: sheen 0.9s ease;
+}
+
+/* ---- keyframes ------------------------------------------------- */
+@keyframes aurora {
+  0% {
+    transform: translate3d(-3%, -2%, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(4%, 3%, 0) scale(1.09);
+  }
+  100% {
+    transform: translate3d(-2%, 5%, 0) scale(1.04);
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes node-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    r: 4;
+  }
+  50% {
+    opacity: 1;
+    r: 6;
+  }
+}
+
+@keyframes float-mesh {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes nav-in {
+  from {
+    opacity: 0;
+    transform: translateY(130%);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes sheen {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.995);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- utility animation classes -------------------------------- */
+.rise {
+  animation: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.rise-1 { animation-delay: 0.05s; }
+.rise-2 { animation-delay: 0.16s; }
+.rise-3 { animation-delay: 0.27s; }
+.rise-4 { animation-delay: 0.38s; }
+.rise-5 { animation-delay: 0.49s; }
+
+/* scroll reveal (toggled by Reveal.tsx) */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.spin-slow {
+  animation: spin-slow 40s linear infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.mesh-float {
+  animation: float-mesh 9s ease-in-out infinite;
+}
+.mesh-line {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.3s ease-out 0.3s forwards;
+}
+.mesh-node {
+  opacity: 0;
+  animation: rise 0.5s ease-out both;
+}
+.mesh-node--pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation:
+    rise 0.5s ease-out both,
+    node-pulse 4.5s ease-in-out 1.6s infinite;
+}
+.nav-in {
+  animation: nav-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s both;
+}
+.page-in {
+  animation: page-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  body::before {
+    animation: none;
+  }
+  .rise,
+  .mesh-line,
+  .mesh-node,
+  .mesh-node--pulse,
+  .mesh-float,
+  .spin-slow {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    stroke-dashoffset: 0;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .nav-in,
+  .page-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .sheen::before {
+    display: none;
+  }
 }
