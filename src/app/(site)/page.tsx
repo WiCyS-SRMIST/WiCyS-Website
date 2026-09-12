@@ -2,8 +2,12 @@ import Link from "next/link";
 import CtfChallenge from "@/components/CtfChallenge";
 import Reveal from "@/components/Reveal";
 import CountUp from "@/components/CountUp";
+import { sanityFetch } from "@/sanity/client";
+import { HOME_QUERY, type HomeResult } from "@/sanity/queries";
 
-const offerings = [
+export const revalidate = 60;
+
+const fallbackOfferings = [
   {
     title: "Workshops & labs",
     body: "Hands-on sessions on web security, networking, cryptography, and tooling — no prior experience assumed.",
@@ -22,21 +26,36 @@ const offerings = [
   },
 ];
 
-const stats = [
-  { node: <CountUp value={120} suffix="+" />, label: "Active members" },
-  { node: <CountUp value={24} />, label: "Events a year" },
-  { node: <CountUp value={3} />, label: "CTF teams" },
-  { node: <CountUp value={2019} />, label: "Chartered" },
+const fallbackStats = [
+  { value: 120, suffix: "+", label: "Active members" },
+  { value: 24, label: "Events a year" },
+  { value: 3, label: "CTF teams" },
+  { value: 2019, label: "Chartered" },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const home = await sanityFetch<HomeResult>({ query: HOME_QUERY });
+
+  const offerings =
+    home?.offerings?.length ? home.offerings : fallbackOfferings;
+  const stats = home?.stats?.length ? home.stats : fallbackStats;
+  const heroPrimaryCta = home?.heroPrimaryCta ?? {
+    label: "Join the chapter",
+    href: "/contact",
+  };
+  const heroSecondaryCta = home?.heroSecondaryCta ?? {
+    label: "What we do",
+    href: "/about",
+  };
+
   return (
     <div className="flex flex-col gap-24 pt-14 md:gap-36 md:pt-20">
       {/* Hero */}
       <section className="grid items-center gap-12 md:grid-cols-[1.08fr_0.92fr] md:gap-6">
         <div>
           <h1 className="rise rise-1 font-display text-[2.6rem] font-semibold leading-[1.03] tracking-[-0.02em] text-text sm:text-5xl lg:text-[3.75rem]">
-            Women, building the skills to defend the internet.
+            {home?.heroHeading ??
+              "Women, building the skills to defend the internet."}
             <svg
               viewBox="0 0 320 12"
               preserveAspectRatio="none"
@@ -55,22 +74,21 @@ export default function Home() {
             </svg>
           </h1>
           <p className="rise rise-2 mt-6 max-w-lg text-lg leading-relaxed text-text-muted">
-            WiCyS SRMIST is a student community where women dig into
-            cybersecurity together — breaking things in the lab, defending them
-            in CTFs, and building the network to take it professional.
+            {home?.heroBody ??
+              "WiCyS SRMIST is a student community where women dig into cybersecurity together — breaking things in the lab, defending them in CTFs, and building the network to take it professional."}
           </p>
           <div className="rise rise-3 mt-8 flex flex-wrap gap-3">
             <Link
-              href="/contact"
+              href={heroPrimaryCta.href}
               className="sheen rounded-full bg-green px-5 py-2.5 font-semibold text-on-green transition-transform hover:-translate-y-0.5 active:translate-y-0"
             >
-              Join the chapter
+              {heroPrimaryCta.label}
             </Link>
             <Link
-              href="/about"
+              href={heroSecondaryCta.href}
               className="rounded-full border border-border px-5 py-2.5 font-semibold text-text transition-colors hover:border-green hover:text-green"
             >
-              What we do
+              {heroSecondaryCta.label}
             </Link>
           </div>
         </div>
@@ -84,7 +102,7 @@ export default function Home() {
       {/* Offerings */}
       <Reveal as="section">
         <h2 className="max-w-xl font-display text-2xl font-semibold tracking-tight text-text sm:text-3xl">
-          What a semester with us looks like
+          {home?.offeringsHeading ?? "What a semester with us looks like"}
         </h2>
         <div className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
           {offerings.map((o, i) => (
@@ -112,7 +130,7 @@ export default function Home() {
         {stats.map((s) => (
           <div key={s.label} className="bg-bg-2 px-5 py-9 text-center">
             <div className="font-display text-3xl font-semibold text-green">
-              {s.node}
+              <CountUp value={s.value} suffix={s.suffix} />
             </div>
             <div className="mt-1 text-sm text-text-faint">{s.label}</div>
           </div>
@@ -125,18 +143,18 @@ export default function Home() {
         className="ring-brand overflow-hidden rounded-3xl bg-gradient-to-br from-surface-2 to-bg-2 px-6 py-14 text-center sm:px-12 sm:py-20"
       >
         <h2 className="mx-auto max-w-xl font-display text-2xl font-semibold tracking-tight text-text sm:text-[2rem]">
-          You don&apos;t need to know where to start. That&apos;s what the chapter
-          is for.
+          {home?.closingCtaHeading ??
+            "You don't need to know where to start. That's what the chapter is for."}
         </h2>
         <p className="mx-auto mt-4 max-w-md leading-relaxed text-text-muted">
-          Open to all students at SRMIST, every year and every branch. Come to
-          one session and see.
+          {home?.closingCtaBody ??
+            "Open to all students at SRMIST, every year and every branch. Come to one session and see."}
         </p>
         <Link
-          href="/contact"
+          href={home?.closingCta?.href ?? "/contact"}
           className="sheen mt-8 inline-flex rounded-full bg-green px-6 py-3 font-semibold text-on-green transition-transform hover:-translate-y-0.5"
         >
-          Get in touch
+          {home?.closingCta?.label ?? "Get in touch"}
         </Link>
       </Reveal>
     </div>

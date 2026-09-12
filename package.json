@@ -6,14 +6,25 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typegen": "sanity schema extract --path=src/sanity/schema.json && sanity typegen generate",
+    "sanity": "sanity",
+    "seed": "sanity dataset import ./scripts/seed.ndjson --dataset production --replace"
   },
   "dependencies": {
+    "@portabletext/react": "^8.0.1",
+    "@sanity/icons": "^5.2.2",
+    "@sanity/image-url": "^2.1.1",
+    "@sanity/vision": "^6.13.2",
     "next": "16.2.10",
+    "next-sanity": "^13.3.4",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "sanity": "^6.13.2",
+    "styled-components": "^6.5.3"
   },
   "devDependencies": {
+    "@sanity/cli": "^8.11.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -29,6 +40,7 @@
     "unrs-resolver"
   ],
   "trustedDependencies": [
+    "esbuild",
     "sharp",
     "unrs-resolver"
   ]

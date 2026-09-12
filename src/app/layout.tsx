@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
-import SiteHeader from "@/components/SiteHeader";
-import SiteFooter from "@/components/SiteFooter";
-import BottomNav from "@/components/BottomNav";
 
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
@@ -39,14 +36,7 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`${bricolage.variable} ${plexSans.variable} antialiased`}
     >
-      <body className="min-h-dvh">
-        <SiteHeader />
-        <main className="mx-auto w-full max-w-6xl px-5 pb-16 sm:px-8">
-          {children}
-        </main>
-        <SiteFooter />
-        <BottomNav />
-      </body>
+      <body className="min-h-dvh">{children}</body>
     </html>
   );
 }
