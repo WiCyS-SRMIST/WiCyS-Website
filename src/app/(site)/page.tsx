@@ -57,7 +57,7 @@ export default async function Home() {
       {/* Hero */}
       <section className="grid items-center gap-12 md:grid-cols-[1.08fr_0.92fr] md:gap-6">
         <div>
-          <h1 className="rise rise-1 font-display text-[2.6rem] font-semibold leading-[1.03] tracking-[-0.02em] text-text sm:text-5xl lg:text-[3.75rem]">
+          <h1 className="text-fluid-hero rise rise-1 font-display font-semibold leading-[1.03] tracking-[-0.02em] text-text">
             {home?.heroHeading ??
               "Women, building the skills to defend the internet."}
             <svg
@@ -105,7 +105,7 @@ export default async function Home() {
 
       {/* Offerings */}
       <Reveal as="section">
-        <h2 className="max-w-xl font-display text-2xl font-semibold tracking-tight text-text sm:text-3xl">
+        <h2 className="text-fluid-h2 max-w-xl font-display font-semibold tracking-tight text-text">
           {home?.offeringsHeading ?? "What a semester with us looks like"}
         </h2>
         <div className="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2">
@@ -146,7 +146,7 @@ export default async function Home() {
         as="section"
         className="ring-brand overflow-hidden rounded-3xl bg-gradient-to-br from-surface-2 to-bg-2 px-6 py-14 text-center sm:px-12 sm:py-20"
       >
-        <h2 className="mx-auto max-w-xl font-display text-2xl font-semibold tracking-tight text-text sm:text-[2rem]">
+        <h2 className="text-fluid-h2 mx-auto max-w-xl font-display font-semibold tracking-tight text-text">
           {home?.closingCtaHeading ??
             "You don't need to know where to start. That's what the chapter is for."}
         </h2>

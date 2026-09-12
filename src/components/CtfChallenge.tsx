@@ -63,7 +63,7 @@ export default function CtfChallenge() {
         </p>
 
         <div className="overflow-x-auto rounded-2xl border border-border bg-bg-2 px-4 py-3">
-          <code className="block whitespace-nowrap font-mono text-sm tracking-wide text-green">
+          <code className="block whitespace-nowrap font-mono text-xs tracking-wide text-green sm:text-sm">
             {ENCODED_FLAG}
           </code>
         </div>
