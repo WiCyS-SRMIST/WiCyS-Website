@@ -11,7 +11,8 @@ export const metadata: Metadata = {
     "The students and faculty advisor leading the WiCyS SRMIST chapter.",
 };
 
-export const revalidate = 60;
+// Fallback re-fetch interval — the /api/revalidate webhook does the real work.
+export const revalidate = 3600;
 
 function initials(name: string) {
   return name
@@ -23,7 +24,10 @@ function initials(name: string) {
 }
 
 export default async function Team() {
-  const members = await sanityFetch<TeamMemberResult[]>({ query: TEAM_QUERY });
+  const members = await sanityFetch<TeamMemberResult[]>({
+    query: TEAM_QUERY,
+    tags: ["teamMember"],
+  });
 
   return (
     <div className="flex flex-col gap-14 pt-10 md:pt-16">
