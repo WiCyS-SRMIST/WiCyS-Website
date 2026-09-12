@@ -5,7 +5,8 @@ import CountUp from "@/components/CountUp";
 import { sanityFetch } from "@/sanity/client";
 import { HOME_QUERY, type HomeResult } from "@/sanity/queries";
 
-export const revalidate = 60;
+// Fallback re-fetch interval — the /api/revalidate webhook does the real work.
+export const revalidate = 3600;
 
 const fallbackOfferings = [
   {
@@ -34,7 +35,10 @@ const fallbackStats = [
 ];
 
 export default async function Home() {
-  const home = await sanityFetch<HomeResult>({ query: HOME_QUERY });
+  const home = await sanityFetch<HomeResult>({
+    query: HOME_QUERY,
+    tags: ["homePage"],
+  });
 
   const offerings =
     home?.offerings?.length ? home.offerings : fallbackOfferings;

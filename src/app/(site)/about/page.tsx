@@ -12,7 +12,8 @@ export const metadata: Metadata = {
     "Who WiCyS SRMIST is, why the chapter exists, and what we value as a community of women in cybersecurity.",
 };
 
-export const revalidate = 60;
+// Fallback re-fetch interval — the /api/revalidate webhook does the real work.
+export const revalidate = 3600;
 
 const fallbackValues = [
   {
@@ -34,7 +35,10 @@ const fallbackValues = [
 ];
 
 export default async function About() {
-  const about = await sanityFetch<AboutResult>({ query: ABOUT_QUERY });
+  const about = await sanityFetch<AboutResult>({
+    query: ABOUT_QUERY,
+    tags: ["aboutPage"],
+  });
   const values = about?.values?.length ? about.values : fallbackValues;
 
   return (

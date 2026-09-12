@@ -15,14 +15,24 @@ export const client = createClient({
 export async function sanityFetch<T>({
   query,
   params = {},
+  tags = [],
   revalidate = 60,
 }: {
   query: string;
   params?: Record<string, unknown>;
+  /** Cache tag(s) matching a document `_type`, busted by /api/revalidate on publish. */
+  tags?: string[];
+  /** Time-based fallback (seconds). Ignored when `tags` is non-empty — those
+   *  are cached indefinitely until a webhook calls revalidateTag(). */
   revalidate?: number;
 }): Promise<T> {
-  return client.fetch<T>(query, params, { next: { revalidate } });
+  return client.fetch<T>(query, params, {
+    next: tags.length ? { tags, revalidate: false } : { revalidate },
+  });
 }
 
 export const getSiteSettings = () =>
-  sanityFetch<SiteSettingsResult>({ query: SITE_SETTINGS_QUERY });
+  sanityFetch<SiteSettingsResult>({
+    query: SITE_SETTINGS_QUERY,
+    tags: ["siteSettings"],
+  });

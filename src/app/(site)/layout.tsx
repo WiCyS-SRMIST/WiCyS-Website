@@ -3,7 +3,8 @@ import SiteFooter from "@/components/SiteFooter";
 import BottomNav from "@/components/BottomNav";
 import AnnouncementBar from "@/components/AnnouncementBar";
 
-export const revalidate = 60;
+// Fallback re-fetch interval — the /api/revalidate webhook does the real work.
+export const revalidate = 3600;
 
 export default function SiteLayout({
   children,

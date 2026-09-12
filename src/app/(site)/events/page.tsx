@@ -14,7 +14,8 @@ export const metadata: Metadata = {
     "Workshops, CTFs, and talks hosted by the WiCyS SRMIST chapter — what's coming up and what we've run.",
 };
 
-export const revalidate = 60;
+// Fallback re-fetch interval — the /api/revalidate webhook does the real work.
+export const revalidate = 3600;
 
 const trackColor: Record<string, string> = {
   workshop: "text-green",
@@ -89,8 +90,8 @@ function EventRow({ e, dim = false }: { e: EventResult; dim?: boolean }) {
 
 export default async function Events() {
   const [upcoming, past] = await Promise.all([
-    sanityFetch<EventResult[]>({ query: EVENTS_UPCOMING_QUERY }),
-    sanityFetch<EventResult[]>({ query: EVENTS_PAST_QUERY }),
+    sanityFetch<EventResult[]>({ query: EVENTS_UPCOMING_QUERY, tags: ["event"] }),
+    sanityFetch<EventResult[]>({ query: EVENTS_PAST_QUERY, tags: ["event"] }),
   ]);
   const [next, ...rest] = upcoming;
 

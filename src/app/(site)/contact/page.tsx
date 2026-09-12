@@ -10,7 +10,8 @@ export const metadata: Metadata = {
     "Reach the WiCyS SRMIST chapter — email, social channels, and a message form.",
 };
 
-export const revalidate = 60;
+// Fallback re-fetch interval — the /api/revalidate webhook does the real work.
+export const revalidate = 3600;
 
 const fallbackChannels = [
   { label: "Email", value: "wicys@srmist.edu.in", href: "mailto:wicys@srmist.edu.in" },
@@ -20,7 +21,10 @@ const fallbackChannels = [
 ];
 
 export default async function Contact() {
-  const contact = await sanityFetch<ContactResult>({ query: CONTACT_QUERY });
+  const contact = await sanityFetch<ContactResult>({
+    query: CONTACT_QUERY,
+    tags: ["contactInfo"],
+  });
   const channels = contact?.channels?.length
     ? contact.channels
     : fallbackChannels;

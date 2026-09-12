@@ -4,6 +4,7 @@ import { ANNOUNCEMENTS_QUERY, type AnnouncementResult } from "@/sanity/queries";
 export default async function AnnouncementBar() {
   const announcements = await sanityFetch<AnnouncementResult[]>({
     query: ANNOUNCEMENTS_QUERY,
+    tags: ["announcement"],
   });
   const latest = announcements?.[0];
   if (!latest) return null;
