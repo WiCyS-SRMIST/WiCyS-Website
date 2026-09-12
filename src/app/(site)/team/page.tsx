@@ -32,7 +32,7 @@ export default async function Team() {
   return (
     <div className="flex flex-col gap-14 pt-10 md:pt-16">
       <header className="max-w-2xl">
-        <h1 className="font-display text-4xl font-semibold tracking-tight text-text sm:text-5xl">
+        <h1 className="text-fluid-h1 font-display font-semibold tracking-tight text-text">
           The team
         </h1>
         <p className="mt-6 text-lg leading-relaxed text-text-muted">

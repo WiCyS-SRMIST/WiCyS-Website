@@ -47,16 +47,11 @@ export default function BottomNav() {
         {/* frosted sliding indicator */}
         <span
           aria-hidden
-          className="pointer-events-none absolute inset-y-1.5 left-1.5 rounded-full transition-transform duration-[440ms] ease-[cubic-bezier(0.34,1.4,0.5,1)]"
+          className="nav-indicator pointer-events-none absolute inset-y-1.5 left-1.5 rounded-full transition-transform duration-[440ms] ease-[cubic-bezier(0.34,1.4,0.5,1)]"
           style={{
             width: `calc((100% - 0.75rem) / ${navItems.length})`,
             transform: `translateX(${Math.max(activeIndex, 0) * 100}%)`,
             opacity: activeIndex < 0 ? 0 : 1,
-            background:
-              "linear-gradient(180deg, color-mix(in oklab, var(--violet) 40%, var(--violet-deep)), var(--violet-deep))",
-            border: "1px solid color-mix(in oklab, var(--green) 45%, transparent)",
-            boxShadow:
-              "inset 0 1px 0 rgba(255,255,255,0.25), 0 6px 22px -6px color-mix(in oklab, var(--green) 55%, transparent)",
           }}
         />
         {navItems.map((item) => {

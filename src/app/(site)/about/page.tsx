@@ -44,7 +44,7 @@ export default async function About() {
   return (
     <div className="flex flex-col gap-20 pt-10 md:pt-16">
       <header className="max-w-2xl">
-        <h1 className="font-display text-4xl font-semibold tracking-tight text-text sm:text-5xl">
+        <h1 className="text-fluid-h1 font-display font-semibold tracking-tight text-text">
           {about?.heading ?? "About the chapter"}
         </h1>
         <p className="mt-6 text-lg leading-relaxed text-text-muted">
@@ -95,7 +95,7 @@ export default async function About() {
       </Reveal>
 
       <Reveal as="section">
-        <h2 className="font-display text-2xl font-semibold tracking-tight text-text sm:text-3xl">
+        <h2 className="text-fluid-h2 font-display font-semibold tracking-tight text-text">
           {about?.valuesHeading ?? "What we value"}
         </h2>
         <dl className="mt-10 flex flex-col divide-y divide-border border-y border-border">
