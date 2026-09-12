@@ -12,6 +12,12 @@ const icons: Record<string, React.ReactNode> = {
       <path d="M12 11v6M12 7.5h.01" />
     </>
   ),
+  "/events": (
+    <>
+      <rect x="3" y="5" width="18" height="16" rx="2" />
+      <path d="M3 10h18M8 3v4M16 3v4" />
+    </>
+  ),
   "/team": (
     <>
       <circle cx="9" cy="9" r="3" />

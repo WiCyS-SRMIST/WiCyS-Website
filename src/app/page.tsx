@@ -1,5 +1,5 @@
 import Link from "next/link";
-import MeshGraphic from "@/components/MeshGraphic";
+import CtfChallenge from "@/components/CtfChallenge";
 import Reveal from "@/components/Reveal";
 import CountUp from "@/components/CountUp";
 
@@ -31,15 +31,11 @@ const stats = [
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-24 pt-10 md:gap-36 md:pt-16">
+    <div className="flex flex-col gap-24 pt-14 md:gap-36 md:pt-20">
       {/* Hero */}
       <section className="grid items-center gap-12 md:grid-cols-[1.08fr_0.92fr] md:gap-6">
         <div>
-          <p className="rise rise-1 inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3 py-1 text-sm text-text-muted">
-            <span className="h-1.5 w-1.5 rounded-full bg-green" />
-            SRMIST student chapter
-          </p>
-          <h1 className="rise rise-2 mt-5 font-display text-[2.6rem] font-semibold leading-[1.03] tracking-[-0.02em] text-text sm:text-5xl lg:text-[3.75rem]">
+          <h1 className="rise rise-1 font-display text-[2.6rem] font-semibold leading-[1.03] tracking-[-0.02em] text-text sm:text-5xl lg:text-[3.75rem]">
             Women, building the skills to defend the internet.
             <svg
               viewBox="0 0 320 12"
@@ -58,12 +54,12 @@ export default function Home() {
               />
             </svg>
           </h1>
-          <p className="rise rise-3 mt-6 max-w-lg text-lg leading-relaxed text-text-muted">
+          <p className="rise rise-2 mt-6 max-w-lg text-lg leading-relaxed text-text-muted">
             WiCyS SRMIST is a student community where women dig into
             cybersecurity together — breaking things in the lab, defending them
             in CTFs, and building the network to take it professional.
           </p>
-          <div className="rise rise-4 mt-8 flex flex-wrap gap-3">
+          <div className="rise rise-3 mt-8 flex flex-wrap gap-3">
             <Link
               href="/contact"
               className="sheen rounded-full bg-green px-5 py-2.5 font-semibold text-on-green transition-transform hover:-translate-y-0.5 active:translate-y-0"
@@ -79,9 +75,9 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="rise rise-3 relative mx-auto aspect-square w-full max-w-sm md:max-w-none">
+        <div className="rise rise-3 relative mx-auto w-full max-w-sm md:max-w-none">
           <div className="pointer-events-none absolute inset-6 rounded-full bg-violet/20 blur-3xl" />
-          <MeshGraphic />
+          <CtfChallenge />
         </div>
       </section>
 
