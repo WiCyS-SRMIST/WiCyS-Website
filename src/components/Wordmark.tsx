@@ -1,7 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Wordmark({ className = "" }: { className?: string }) {
+export default function Wordmark({
+  className = "",
+  suffix = "SRMIST",
+}: {
+  className?: string;
+  suffix?: string;
+}) {
   return (
     <Link
       href="/"
@@ -19,7 +25,7 @@ export default function Wordmark({ className = "" }: { className?: string }) {
         />
       </span>
       <span className="hidden text-sm font-medium tracking-[0.18em] text-text-faint sm:inline">
-        SRMIST
+        {suffix}
       </span>
     </Link>
   );
