@@ -30,7 +30,7 @@ export default async function Team() {
   });
 
   return (
-    <div className="flex flex-col gap-14 pt-10 md:pt-16">
+    <div className="flex flex-col gap-10 pt-6 sm:gap-14 sm:pt-10 md:pt-16">
       <header className="max-w-2xl">
         <h1 className="text-fluid-h1 font-display font-semibold tracking-tight text-text">
           The team
