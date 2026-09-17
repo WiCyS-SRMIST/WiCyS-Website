@@ -46,11 +46,11 @@ export default function CtfChallenge() {
   return (
     <>
       <Toast toast={toast} onClose={() => setToast(null)} />
-      <div className="glass ring-brand flex flex-col gap-3.5 rounded-3xl p-5 sm:p-6">
-        <div className="flex items-center justify-between gap-3">
+      <div className="glass ring-brand flex flex-col gap-3.5 rounded-3xl p-4 sm:p-6">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
           <span className="inline-flex items-center gap-2 text-sm text-text-muted">
             <span
-              className={`h-1.5 w-1.5 rounded-full ${solved ? "bg-green" : "bg-violet"}`}
+              className={`h-1.5 w-1.5 shrink-0 rounded-full ${solved ? "bg-green" : "bg-violet"}`}
             />
             A tiny challenge, on us
           </span>
@@ -62,8 +62,8 @@ export default function CtfChallenge() {
           <code className="text-text">wicys{"{...}"}</code>.
         </p>
 
-        <div className="overflow-x-auto rounded-2xl border border-border bg-bg-2 px-4 py-3">
-          <code className="block whitespace-nowrap font-mono text-xs tracking-wide text-green sm:text-sm">
+        <div className="overflow-x-auto rounded-2xl border border-border bg-bg-2 px-3 py-3 sm:px-4">
+          <code className="block whitespace-nowrap font-mono text-[0.68rem] tracking-wide text-green sm:text-sm">
             {ENCODED_FLAG}
           </code>
         </div>

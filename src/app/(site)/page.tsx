@@ -53,7 +53,7 @@ export default async function Home() {
   };
 
   return (
-    <div className="flex flex-col gap-24 pt-14 md:gap-36 md:pt-20">
+    <div className="flex flex-col gap-14 pt-8 sm:gap-20 sm:pt-14 md:gap-36 md:pt-20">
       {/* Hero */}
       <section className="grid items-center gap-12 md:grid-cols-[1.08fr_0.92fr] md:gap-6">
         <div>

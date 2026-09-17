@@ -42,7 +42,7 @@ export default async function About() {
   const values = about?.values?.length ? about.values : fallbackValues;
 
   return (
-    <div className="flex flex-col gap-20 pt-10 md:pt-16">
+    <div className="flex flex-col gap-12 pt-6 sm:gap-20 sm:pt-10 md:pt-16">
       <header className="max-w-2xl">
         <h1 className="text-fluid-h1 font-display font-semibold tracking-tight text-text">
           {about?.heading ?? "About the chapter"}
