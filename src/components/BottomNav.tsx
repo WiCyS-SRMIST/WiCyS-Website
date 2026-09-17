@@ -37,6 +37,7 @@ export default function BottomNav() {
   const activeIndex = navItems.findIndex((item) =>
     item.href === "/" ? pathname === "/" : pathname.startsWith(item.href),
   );
+  const safeIndex = activeIndex < 0 ? 0 : activeIndex;
 
   return (
     <nav
@@ -50,8 +51,7 @@ export default function BottomNav() {
           className="nav-indicator pointer-events-none absolute inset-y-1.5 left-1.5 rounded-full transition-transform duration-[440ms] ease-[cubic-bezier(0.34,1.4,0.5,1)]"
           style={{
             width: `calc((100% - 0.75rem) / ${navItems.length})`,
-            transform: `translateX(${Math.max(activeIndex, 0) * 100}%)`,
-            opacity: activeIndex < 0 ? 0 : 1,
+            transform: `translateX(${safeIndex * 100}%)`,
           }}
         />
         {navItems.map((item) => {
